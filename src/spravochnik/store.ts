@@ -28,13 +28,31 @@ class HttpService {
 
 type Spravochnik = {
   id?: string;
+  name?: string;
+  params?: Record<string, unknown>;
   onChange?: (data: unknown) => void;
 };
 type SpravochnikStore = Spravochnik & {
+  isOpen: boolean;
+  open: () => void;
+  close: () => void;
   setSpravochnik(state: Spravochnik): void;
 };
 const useSpravochnikStore = create<SpravochnikStore>((set) => ({
+  isOpen: false,
+  open: () => set({ isOpen: true }),
+  close: () => set({ isOpen: false }),
   setSpravochnik: (state) => set(state),
 }));
 
-export { useSpravochnikStore, HttpService };
+const useSpravochnik = () => {
+  const { isOpen, open, close } = useSpravochnikStore();
+
+  return {
+    isOpen,
+    open,
+    close,
+  };
+};
+
+export { useSpravochnikStore, useSpravochnik, HttpService };
