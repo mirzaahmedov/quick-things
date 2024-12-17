@@ -1,9 +1,15 @@
 import { RouterProvider } from "react-router-dom";
+import { main } from "./parsed";
 import { router } from "./router";
+import { useEffect } from "react";
 import { useLayoutStore } from "./layout/hook";
 
 const App = () => {
   const { title, onCreate, onBack } = useLayoutStore();
+
+  useEffect(() => {
+    console.log(main());
+  }, []);
 
   return (
     <div>
