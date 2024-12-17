@@ -9,12 +9,15 @@ const useEventCallback = <T extends (...args: any[]) => any>(
   useEffect(() => {
     ref.current = func;
   }, [func]);
-  const cb = useCallback<T>(((...args) => ref.current?.(...args)) as T, []);
+  const cb = useCallback(
+    (...args: Parameters<T>) => ref.current?.(...args),
+    []
+  );
 
   if (!func) {
     return;
   }
-  return cb;
+  return cb as ReturnType<T>;
 };
 
 type Layout = {
